@@ -1,147 +1,79 @@
-# CS157A Banking App
+# Relational Banking Database System
 
-A bank account management system built with Flask and PostgreSQL.
+A full-stack banking database system built with PostgreSQL, SQL, Python, and Flask. The application supports account management, transaction processing, loan tracking, and role-based admin functionality through a relational database architecture.
 
----
+## Features
 
-## Prerequisites
+- Customer account creation and management
+- Deposit, withdrawal, and transfer functionality
+- Loan application and approval workflows
+- Role-based staff/admin dashboard
+- Account freezing and reactivation
+- PostgreSQL relational database design with foreign key relationships
+- SQL joins, transactions, and backend CRUD operations
+- Flask backend with dynamic HTML templates
 
-- Python 3.8+
-- Git
+## Tech Stack
+
+- Python
+- Flask
 - PostgreSQL
+- SQL
+- HTML/CSS
 
----
+## Database Design
 
-## 1. Clone the Repository
+The system uses a normalized relational database structure for managing customers, accounts, transactions, loans, and loan payments.
 
-```bash
-git clone https://github.com/rahulallamraju/cs157a-banking.git
-cd cs157a-banking
-```
+![ER Diagram](screenshots/er_diagram.png)
 
----
+## Application Screenshots
 
-## 2. Install PostgreSQL
+### Staff Dashboard
 
-### macOS
+![Staff Dashboard](screenshots/staff_dashboard.png)
 
-1. Download and install **Postgres.app** from the official site: https://postgresapp.com
-2. Open the app.
-3. Start the server from the app interface by clicking **Start**.
-4. Add the command-line tools to your PATH if prompted — Postgres.app documents its binaries and PATH setup at https://postgresapp.com/documentation/cli-tools.html
+### Customer Management
 
+![Customer Management](screenshots/customer_management.png)
 
-## 3. Set Up the Database
+### Customer Details
 
-### macOS / Linux
+![Customer Details](screenshots/customer_details.png)
 
-Open a terminal and run:
+### Loan Application
 
-```bash
-psql postgres
-```
+![Loan Application](screenshots/loan_application.png)
 
-Then inside psql, create the database and a user:
+## Running the Application
 
-```sql
-CREATE DATABASE bank_db;
-CREATE USER your_username WITH PASSWORD '';
-GRANT ALL PRIVILEGES ON DATABASE bank_db TO your_username;
-\q
-```
-
-Replace `your_username` with your local system username (run `whoami` in your terminal to find it).
-
-### Windows
-
-Open **SQL Shell (psql)** from the Start Menu. Log in as `postgres` (use the password you set during installation), then run:
-
-```sql
-CREATE DATABASE bank_db;
-CREATE USER your_username WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE bank_db TO your_username;
-\q
-```
-
----
-
-## 4. Configure the Database Connection
-
-Open [db/connection.py](db/connection.py) and update the fields to match your local PostgreSQL setup:
-
-```python
-def get_connection():
-    return psycopg2.connect(
-        host="localhost",
-        port="5432",
-        database="bank_db",
-        user="your_username",   # replace with your OS username or psql user
-        password=""             # replace with your password if you set one
-    )
-```
-
----
-
-## 5. Set Up the Python Environment
-
-Open a terminal in VS Code (`Terminal > New Terminal`) from the project root.
-
-Create the virtual environment:
+1. Install dependencies
 
 ```bash
-python -m venv venv
+pip install -r requirements.txt
 ```
 
-Activate it:
+2. Configure PostgreSQL and environment variables
+
+3. Run the schema setup
 
 ```bash
-# macOS / Linux
-source venv/bin/activate
-
-
----
-
-## 6. Install Dependencies
-
-```bash
-pip install flask psycopg2-binary
+python seed.py
 ```
 
-Save them to `requirements.txt`:
-
-```bash
-pip freeze > requirements.txt
-```
-
----
-
-## 7. Run the Flask App
+4. Start the Flask server
 
 ```bash
 python app.py
-or
-python3 app.py
 ```
 
-The app will start at **http://127.0.0.1:5000**
+## Concepts Demonstrated
 
-To verify the database connection is working, visit:
-
-```
-http://127.0.0.1:5000/test-db
-```
-
-You should see: `Database connected successfully!`
-
----
-
-## Troubleshooting
-
-**`psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed`**
-PostgreSQL is not running. Start it with `brew services start postgresql@14` (macOS) or `sudo systemctl start postgresql` (Linux).
-
-**`FATAL: role "your_username" does not exist`**
-Make sure you created the PostgreSQL user in Step 3 with a username that matches what is in `db/connection.py`.
-
-**`ModuleNotFoundError: No module named 'flask'`**
-Your virtual environment is not activated. Run `source venv/bin/activate` (macOS/Linux) or `venv\Scripts\activate` (Windows) before running the app.
+- Relational database schema design
+- Foreign key relationships
+- SQL joins and transactions
+- CRUD operations
+- Role-based access control
+- Backend data validation
+- Flask web application development
+- Database normalization
