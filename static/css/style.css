@@ -1,0 +1,629 @@
+:root {
+    --navy: #1a3c5e;
+    --navy-dark: #0f2540;
+    --navy-light: #e8f0f8;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f1f5f9;
+    --card-bg: #ffffff;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background-color: var(--bg);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ── Navbar ─────────────────────────────────────────── */
+.bank-nav {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.bank-nav .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+}
+
+.bank-nav .nav-brand .nav-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.bank-nav .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bank-nav .nav-link-item {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.bank-nav .nav-link-item:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
+}
+
+.bank-nav .user-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.bank-nav .user-avatar {
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+}
+
+.bank-nav .btn-logout {
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+
+.bank-nav .btn-logout:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-color: rgba(255,255,255,0.4);
+}
+
+/* ── Page Layout ─────────────────────────────────────── */
+.page-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.page-wrapper-sm {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.page-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    transition: color 0.15s;
+}
+
+.back-link:hover { color: var(--navy); }
+
+/* ── Cards ──────────────────────────────────────────── */
+.bank-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.bank-card .card-section {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.bank-card .card-section:last-child {
+    border-bottom: none;
+}
+
+/* ── Account Cards ───────────────────────────────────── */
+.account-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.account-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+    color: inherit;
+}
+
+.account-card .account-type-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.account-card.checking .account-type-icon {
+    background: var(--accent-light);
+    color: var(--accent);
+}
+
+.account-card.savings .account-type-icon {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.account-card .account-balance {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.account-card .account-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.account-card .account-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+}
+
+/* ── Stat Boxes ─────────────────────────────────────── */
+.stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-box .stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.stat-box .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ── Badges ─────────────────────────────────────────── */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.status-badge.active   { background: var(--success-light); color: var(--success); }
+.status-badge.closed   { background: #f1f5f9; color: var(--text-muted); }
+.status-badge.pending  { background: var(--warning-light); color: var(--warning); }
+.status-badge.approved { background: var(--accent-light); color: var(--accent); }
+.status-badge.rejected { background: var(--danger-light); color: var(--danger); }
+.status-badge.paid     { background: var(--success-light); color: var(--success); }
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn-primary-bank {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+.btn-primary-bank:hover {
+    background: var(--navy-dark);
+    color: white;
+    box-shadow: 0 4px 12px rgba(26,60,94,0.3);
+}
+
+.btn-secondary-bank {
+    background: white;
+    color: var(--navy);
+    border: 1px solid var(--border);
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.15s;
+}
+
+.btn-secondary-bank:hover {
+    background: var(--bg);
+    color: var(--navy);
+    border-color: #c8d6e6;
+}
+
+/* ── Transaction Table ───────────────────────────────── */
+.tx-table { width: 100%; border-collapse: collapse; }
+
+.tx-table th {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+.tx-table td {
+    padding: 0.8rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.tx-table tr:last-child td { border-bottom: none; }
+
+.tx-table .tx-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.tx-type-badge.deposit    { background: var(--success-light); color: var(--success); }
+.tx-type-badge.withdrawal { background: var(--danger-light); color: var(--danger); }
+.tx-type-badge.transfer   { background: var(--accent-light); color: var(--accent); }
+
+.tx-amount-positive { color: var(--success); font-weight: 600; }
+.tx-amount-negative { color: var(--danger); font-weight: 600; }
+.tx-amount-neutral  { color: var(--accent); font-weight: 600; }
+
+/* ── Forms ───────────────────────────────────────────── */
+.form-control, .form-select {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: white;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(26,60,94,0.12);
+    outline: none;
+}
+
+.form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+}
+
+/* ── Auth Card ───────────────────────────────────────── */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, #0f2540 0%, #1a3c5e 60%, #1e4976 100%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.auth-card-header {
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.auth-card-header .bank-logo {
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin: 0 auto 1rem;
+}
+
+.auth-card-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.auth-card-header p {
+    margin: 0.3rem 0 0;
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+.auth-card-body { padding: 2rem; }
+
+.tab-toggle {
+    display: flex;
+    margin-bottom: 1.5rem;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.tab-toggle button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-radius: 7px;
+    transition: all 0.15s;
+}
+
+.tab-toggle button.active {
+    background: white;
+    color: var(--navy);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-bank {
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+    color: white;
+    width: 100%;
+    padding: 0.7rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: opacity 0.15s, box-shadow 0.15s;
+}
+
+.btn-bank:hover {
+    opacity: 0.92;
+    color: white;
+    box-shadow: 0 4px 12px rgba(26,60,94,0.35);
+}
+
+/* ── Loan Cards ──────────────────────────────────────── */
+.loan-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+}
+
+.loan-card:hover { box-shadow: var(--shadow); }
+
+/* ── Empty State ─────────────────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    color: var(--text-muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.4;
+}
+
+.empty-state p { margin-bottom: 1.25rem; font-size: 0.95rem; }
+
+/* ── Admin Table ─────────────────────────────────────── */
+.admin-table { width: 100%; border-collapse: collapse; }
+
+.admin-table th {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--border);
+    background: var(--bg);
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: #fafbfc; }
+
+/* ── Type Radio Cards ────────────────────────────────── */
+.type-card-input { display: none; }
+
+.type-card-label {
+    display: block;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    background: white;
+}
+
+.type-card-label:hover {
+    border-color: var(--navy);
+    background: var(--navy-light);
+}
+
+.type-card-input:checked + .type-card-label {
+    border-color: var(--navy);
+    background: var(--navy-light);
+    box-shadow: 0 0 0 3px rgba(26,60,94,0.12);
+}
+
+.type-card-label .type-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.type-card-label .type-name {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+}
+
+.type-card-label .type-desc {
+    font-size: 0.775rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+/* ── Alerts ──────────────────────────────────────────── */
+.alert {
+    border: none;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+}
+
+.alert-success { background: var(--success-light); color: var(--success); }
+.alert-danger  { background: var(--danger-light);  color: var(--danger); }
+.alert-warning { background: var(--warning-light); color: var(--warning); }
+.alert-info    { background: var(--accent-light);  color: var(--accent); }
+
+/* ── Dividers ────────────────────────────────────────── */
+.section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1.25rem 0;
+}
+
+/* ── Progress Bar ─────────────────────────────────────── */
+.balance-progress-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.balance-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--navy));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}

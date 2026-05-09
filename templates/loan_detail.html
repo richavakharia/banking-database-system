@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Loan #{{ loan[0] }} — NorthStar Bank{% endblock %}
+
+{% block content %}
+<nav class="bank-nav">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="/dashboard" class="nav-brand">
+            <span class="nav-icon"><i class="bi bi-bank"></i></span>
+            NorthStar Bank
+        </a>
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-link-item"><i class="bi bi-grid me-1"></i>Accounts</a>
+            <a href="/loans" class="nav-link-item"><i class="bi bi-cash-coin me-1"></i>Loans</a>
+            <a href="/logout" class="btn-logout ms-2">Sign Out</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrapper-sm">
+    <a href="/loans" class="back-link"><i class="bi bi-arrow-left"></i> Back to Loans</a>
+
+    <!-- Loan Summary -->
+    <div class="bank-card mt-2">
+        <div class="card-section">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <p class="mb-1" style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted);">
+                        Remaining Balance
+                    </p>
+                    <h2 class="mb-0" style="font-size:2rem; font-weight:700;">${{ "%.2f"|format(remaining_balance) }}</h2>
+                    <p class="mb-0 mt-1" style="font-size:0.8rem; color:var(--text-muted);">
+                        of ${{ "%.2f"|format(loan[2]) }} original principal
+                    </p>
+                    {% if loan[2] > 0 %}
+                    <div class="balance-progress-track mt-2">
+                        {% set paid_pct = ((loan[2] - remaining_balance) / loan[2] * 100)|int %}
+                        <div class="balance-progress-fill" style="width:{{ paid_pct }}%;"></div>
+                    </div>
+                    <p class="mb-0 mt-1" style="font-size:0.75rem; color:var(--text-muted);">{{ paid_pct }}% paid off</p>
+                    {% endif %}
+                </div>
+                <span class="status-badge {{ loan[5] }}">
+                    {% if loan[5] == 'pending' %}<i class="bi bi-hourglass-split"></i>
+                    {% elif loan[5] == 'approved' %}<i class="bi bi-check-circle"></i>
+                    {% elif loan[5] == 'rejected' %}<i class="bi bi-x-circle"></i>
+                    {% elif loan[5] == 'paid' %}<i class="bi bi-trophy"></i>{% endif %}
+                    {{ loan[5] }}
+                </span>
+            </div>
+        </div>
+        <div class="card-section">
+            <div class="row g-3">
+                <div class="col-6 col-md-3">
+                    <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);">Loan #</div>
+                    <div style="font-weight:600; margin-top:0.2rem;">{{ loan[0] }}</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);">Principal</div>
+                    <div style="font-weight:600; margin-top:0.2rem;">${{ "%.2f"|format(loan[2]) }}</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);">Rate</div>
+                    <div style="font-weight:600; margin-top:0.2rem;">{{ "%.2f"|format(loan[3] * 100) }}%</div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);">Start Date</div>
+                    <div style="font-weight:600; margin-top:0.2rem;">{{ loan[4] }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Make a Payment -->
+    {% if loan[5] == 'approved' %}
+    <div class="bank-card mt-3">
+        <div class="card-section">
+            <h6 class="mb-0" style="font-weight:700;"><i class="bi bi-send me-2 text-success"></i>Make a Payment</h6>
+        </div>
+        <div class="card-section">
+            <form method="POST" action="/loans/{{ loan[0] }}/pay">
+                <label class="form-label">Payment Amount</label>
+                <div class="d-flex gap-2">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white" style="border-color:#e2e8f0; font-size:0.875rem;">$</span>
+                        <input type="number" name="amount" step="0.01" min="0.01" max="{{ remaining_balance }}"
+                               class="form-control" placeholder="0.00" required>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="white-space:nowrap; border-radius:8px; font-weight:600; padding:0.6rem 1.4rem;">
+                        Pay Now
+                    </button>
+                </div>
+                <p class="mb-0 mt-2" style="font-size:0.775rem; color:var(--text-muted);">
+                    Maximum payment: ${{ "%.2f"|format(remaining_balance) }}
+                </p>
+            </form>
+        </div>
+    </div>
+    {% elif loan[5] == 'pending' %}
+    <div class="bank-card mt-3" style="border-color:#fef3c7;">
+        <div class="card-section">
+            <p class="mb-0" style="font-size:0.875rem; color:var(--warning);">
+                <i class="bi bi-hourglass-split me-2"></i>
+                Your loan application is pending staff review. Payments will be available once approved.
+            </p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Payment History -->
+    <div class="bank-card mt-3">
+        <div class="card-section d-flex justify-content-between align-items-center">
+            <h6 class="mb-0" style="font-weight:700;">Payment History</h6>
+            {% if payments %}
+                <span style="font-size:0.775rem; color:var(--text-muted);">{{ payments|length }} payment{{ 's' if payments|length != 1 }}</span>
+            {% endif %}
+        </div>
+
+        {% if payments %}
+        <table class="tx-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount Paid</th>
+                    <th>Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <td style="color:var(--text-muted);">{{ payment[3] }}</td>
+                    <td class="tx-amount-positive">-${{ "%.2f"|format(payment[2]) }}</td>
+                    <td style="font-weight:600;">${{ "%.2f"|format(payment[4]) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="card-section">
+            <p class="mb-0" style="font-size:0.875rem; color:var(--text-muted);">No payments made yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

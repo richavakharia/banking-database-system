@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-dark" style="background-color: #1a3c5e;">
+    <div class="container">
+        <span class="navbar-brand fw-semibold">Staff Dashboard</span>
+        <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+    </div>
+</nav>
+
+<div class="container mt-4" style="max-width: 1100px;">
+
+
+    <h3 class="mb-4">Loan Applications</h3>
+    <a href="/admin/customers" class="btn-secondary-bank d-inline-block mb-4">
+    <i class="bi bi-people"></i> Manage Customers
+    </a>
+
+    {% if loans %}
+        <table class="table table-bordered bg-white shadow-sm">
+            <thead>
+                <tr>
+                    <th>Loan ID</th>
+                    <th>Customer ID</th>
+                    <th>Principal</th>
+                    <th>Purpose</th>
+                    <th>Interest Rate</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for loan in loans %}
+                <tr>
+                    <td>{{ loan[0] }}</td>
+                    <td>{{ loan[1] }}</td>
+                    <td>${{ "%.2f"|format(loan[2]) }}</td>
+                    <td>{{ loan[6] }}</td>
+                    <td>
+                        {% if loan[3] %}
+                            {{ "%.2f"|format(loan[3] * 100) }}%
+                        {% else %}
+                            <span class="text-muted">Not assigned</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge
+                            {% if loan[5] == 'approved' %}bg-success
+                            {% elif loan[5] == 'rejected' %}bg-danger
+                            {% elif loan[5] == 'paid' %}bg-primary
+                            {% else %}bg-warning text-dark
+                            {% endif %}">
+                            {{ loan[5] }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if loan[5] == 'pending' %}
+                            <form method="POST" action="/admin/loans/{{ loan[0] }}/approve" class="mb-2">
+                                <div class="d-flex gap-2">
+                                    <select name="interest_rate" class="form-select form-select-sm" required>
+                                        <option value="0.0500">5%</option>
+                                        <option value="0.0750">7.5%</option>
+                                        <option value="0.1000">10%</option>
+                                        <option value="0.1250">12.5%</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </div>
+                            </form>
+
+                            <form method="POST" action="/admin/loans/{{ loan[0] }}/reject">
+                                <button type="submit" class="btn btn-danger btn-sm w-100">Reject</button>
+                            </form>
+                        {% else %}
+                            <span class="text-muted">No action needed</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-muted">No loan applications yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

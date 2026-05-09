@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Customer Details — NorthStar Bank{% endblock %}
+
+{% block content %}
+<nav class="bank-nav">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="/admin/customers" class="nav-brand">
+            <span class="nav-icon"><i class="bi bi-bank"></i></span>
+            Customer Management
+        </a>
+        <div class="nav-links">
+            <a href="/admin" class="nav-link-item"><i class="bi bi-clipboard-check me-1"></i>Loans</a>
+            <a href="/admin/customers" class="nav-link-item"><i class="bi bi-people me-1"></i>Customers</a>
+            <a href="/logout" class="btn-logout ms-2">Sign Out</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-wrapper" style="max-width:1000px;">
+    <a href="/admin/customers" class="back-link"><i class="bi bi-arrow-left"></i> Back to Customers</a>
+
+    <div class="bank-card mt-2">
+        <div class="card-section">
+            <h3 class="mb-1">{{ customer[1] }}</h3>
+            <p class="text-muted mb-2">{{ customer[2] }}</p>
+            <span class="status-badge active">{{ customer[3] }}</span>
+        </div>
+    </div>
+
+    <div class="bank-card mt-3">
+        <div class="card-section">
+            <h5 class="mb-0">Accounts</h5>
+        </div>
+
+        {% if accounts %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Account #</th>
+                    <th>Type</th>
+                    <th>Balance</th>
+                    <th>Opened</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                <tr>
+                    <td>#{{ account[0] }}</td>
+                    <td class="text-capitalize">{{ account[1] }}</td>
+                    <td>${{ "%.2f"|format(account[2]) }}</td>
+                    <td>{{ account[3] }}</td>
+                    <td>
+                        <span class="status-badge {{ account[4] }}">
+                            {{ account[4] }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            {% if account[4] == 'active' %}
+                            <form method="POST" action="/admin/accounts/{{ account[0] }}/freeze">
+                                <button class="btn btn-warning btn-sm" type="submit">Freeze</button>
+                            </form>
+                            <form method="POST" action="/admin/accounts/{{ account[0] }}/close">
+                                <button class="btn btn-danger btn-sm" type="submit">Close</button>
+                            </form>
+                            {% elif account[4] == 'frozen' %}
+                            <form method="POST" action="/admin/accounts/{{ account[0] }}/activate">
+                                <button class="btn btn-success btn-sm" type="submit">Reactivate</button>
+                            </form>
+                            <form method="POST" action="/admin/accounts/{{ account[0] }}/close">
+                                <button class="btn btn-danger btn-sm" type="submit">Close</button>
+                            </form>
+                            {% else %}
+                            <span class="text-muted">No action</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="card-section">
+            <p class="text-muted mb-0">No accounts found.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="bank-card mt-3">
+        <div class="card-section">
+            <h5 class="mb-0">Loans</h5>
+        </div>
+
+        {% if loans %}
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Loan #</th>
+                    <th>Purpose</th>
+                    <th>Principal</th>
+                    <th>Interest Rate</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loans %}
+                <tr>
+                    <td>#{{ loan[0] }}</td>
+                    <td>{{ loan[5] }}</td>
+                    <td>${{ "%.2f"|format(loan[1]) }}</td>
+                    <td>
+                        {% if loan[2] %}
+                            {{ "%.2f"|format(loan[2] * 100) }}%
+                        {% else %}
+                            Not assigned
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="status-badge {{ loan[4] }}">{{ loan[4] }}</span>
+                    </td>
+                    <td>{{ loan[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="card-section">
+            <p class="text-muted mb-0">No loans found.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

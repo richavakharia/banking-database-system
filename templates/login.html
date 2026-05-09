@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Sign In — NorthStar Bank{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-card-header">
+            <div class="bank-logo"><i class="bi bi-bank"></i></div>
+            <h3>NorthStar Bank</h3>
+            <p>Secure Online Banking Portal</p>
+        </div>
+        <div class="auth-card-body">
+
+            <div class="tab-toggle">
+                <button id="loginTab" class="active" onclick="showTab('login')">Sign In</button>
+                <button id="registerTab" onclick="showTab('register')">Create Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" method="POST" action="/login">
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0" style="border-radius:8px 0 0 8px; border-color:#e2e8f0;">
+                            <i class="bi bi-envelope text-muted" style="font-size:0.85rem;"></i>
+                        </span>
+                        <input type="email" name="email" class="form-control border-start-0 ps-0" placeholder="you@email.com" required
+                               style="border-radius:0 8px 8px 0;">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0" style="border-radius:8px 0 0 8px; border-color:#e2e8f0;">
+                            <i class="bi bi-lock text-muted" style="font-size:0.85rem;"></i>
+                        </span>
+                        <input type="password" name="password" class="form-control border-start-0 ps-0" placeholder="••••••••" required
+                               style="border-radius:0 8px 8px 0;">
+                    </div>
+                </div>
+                <button type="submit" class="btn-bank">Sign In</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" method="POST" action="/register" style="display:none;">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0" style="border-radius:8px 0 0 8px; border-color:#e2e8f0;">
+                            <i class="bi bi-person text-muted" style="font-size:0.85rem;"></i>
+                        </span>
+                        <input type="text" name="name" class="form-control border-start-0 ps-0" placeholder="Jane Doe" required
+                               style="border-radius:0 8px 8px 0;">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0" style="border-radius:8px 0 0 8px; border-color:#e2e8f0;">
+                            <i class="bi bi-envelope text-muted" style="font-size:0.85rem;"></i>
+                        </span>
+                        <input type="email" name="email" class="form-control border-start-0 ps-0" placeholder="you@email.com" required
+                               style="border-radius:0 8px 8px 0;">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0" style="border-radius:8px 0 0 8px; border-color:#e2e8f0;">
+                            <i class="bi bi-lock text-muted" style="font-size:0.85rem;"></i>
+                        </span>
+                        <input type="password" name="password" class="form-control border-start-0 ps-0" placeholder="Min. 8 characters" required
+                               style="border-radius:0 8px 8px 0;">
+                    </div>
+                </div>
+                <input type="hidden" name="role" value="customer">
+                <button type="submit" class="btn-bank">Create Account</button>
+            </form>
+
+            <p class="text-center mt-3 mb-0" style="font-size:0.75rem; color:#94a3b8;">
+                <i class="bi bi-shield-lock me-1"></i>256-bit SSL encrypted &amp; secure
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showTab(tab) {
+        document.getElementById('loginForm').style.display    = tab === 'login'    ? 'block' : 'none';
+        document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+        document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+        document.getElementById('registerTab').classList.toggle('active', tab === 'register');
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'register') showTab('register');
+</script>
+{% endblock %}

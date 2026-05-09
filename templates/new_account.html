@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Open New Account — Bank Account Management{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card auth-card">
+        <div class="card-header">
+            <h3>Open New Account</h3>
+            <p>Choose an account type to get started</p>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/accounts/new">
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Account Type</label>
+                    <div class="d-flex gap-3">
+                        <div class="flex-fill">
+                            <input type="radio" class="btn-check" name="account_type" id="checking" value="checking" required>
+                            <label class="btn btn-outline-secondary w-100 py-3" for="checking">
+                                <div class="fw-semibold">Checking</div>
+                                <div class="text-muted" style="font-size: 0.8rem;">Everyday spending</div>
+                            </label>
+                        </div>
+                        <div class="flex-fill">
+                            <input type="radio" class="btn-check" name="account_type" id="savings" value="savings">
+                            <label class="btn btn-outline-secondary w-100 py-3" for="savings">
+                                <div class="fw-semibold">Savings</div>
+                                <div class="text-muted" style="font-size: 0.8rem;">Grow your money</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-bank">Open Account</button>
+                <a href="/dashboard" class="btn btn-link w-100 text-center mt-2" style="color: #6c757d;">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
